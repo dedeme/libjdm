@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-import java.util.Iterator;
+import java.util.Arrays;
 
 /** Utilities for program, files and data management. */
 public class Std {
@@ -95,6 +95,52 @@ public class Std {
    */
   public static String fpath (String... elements) {
     return String.join(File.separator, elements);
+  }
+
+  /**
+   * Returns parent directory of file.
+   * @param file File
+   * @return Parent directory
+   */
+  public static String fparent (String file) {
+    return new File(file).getParent();
+  }
+
+  /**
+   * Returns file name including extension.
+   * @param file File
+   * @return File name
+   */
+  public static String fname (String file) {
+    return new File(file).getName();
+  }
+
+  /**
+   * Returns extension of file including dot, or empty string.
+   * @param file File
+   * @return Extension
+   */
+  public static String fextension (String file) {
+    String name = fname(file);
+    int ix = name.indexOf('.');
+    if (ix == -1) {
+      return "";
+    }
+    return name.substring(ix);
+  }
+
+  /**
+   * Returns name of file without extension, or empty string.
+   * @param file File
+   * @return Name without extension
+   */
+  public static String fonlyName (String file) {
+    String name = fname(file);
+    int ix = name.indexOf('.');
+    if (ix == -1) {
+      return name;
+    }
+    return name.substring(0, ix);
   }
 
   /**
@@ -384,7 +430,7 @@ public class Std {
         .format(n);
     } else {
       String dc = "";
-      for (int i : range(dec)) {
+      for (int i = 0; i < dec; ++i) {
         dc += "0";
       }
       return new DecimalFormat(
@@ -442,7 +488,7 @@ public class Std {
         .format(n);
     } else {
       String dc = "";
-      for (int i : range(dec)) {
+      for (int i = 0; i < dec; ++i) {
         dc += "0";
       }
       return new DecimalFormat(
@@ -524,30 +570,6 @@ public class Std {
   }
 
   /**
-   * Returns an Iterable between 0 (inclusive) and bound (exclusive)
-   * @param bound Iterator limit
-   * @return A Iterable
-   */
-  public static Iterable<Integer> range(int bound) {
-    return new Iterable<Integer>() {
-      @Override
-      public Iterator<Integer> iterator() {
-        return new Iterator<Integer> () {
-          int i = 0;
-          @Override
-          public boolean hasNext() {
-            return i < bound;
-          }
-          @Override
-          public Integer next() {
-            return i++;
-          }
-        };
-      }
-    };
-  }
-
-  /**
    * Return a Stream from an Iterable.
    * @param <T> Generic
    * @param it Iterable
@@ -555,6 +577,19 @@ public class Std {
    */
   public static <T> Stream<T> toStream (Iterable<T> it) {
     return StreamSupport.stream(it.spliterator(), false);
+  }
+
+  /**
+   * Returns message and stackTrace of an Exception.
+   * @param e Exception
+   * @return Message + stackTrace
+   */
+  public static String stackTrace(Exception e) {
+    return e.toString() + "\n" +
+      String.join("\n", Arrays.asList(e.getStackTrace()).stream().map(
+        el -> el.toString()
+      ).collect(Collectors.toList()))
+    ;
   }
 
 }

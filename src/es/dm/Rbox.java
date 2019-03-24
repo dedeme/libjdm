@@ -39,10 +39,12 @@ public class Rbox<T> implements Iterable<T>, Iterator<T> {
     return this;
   }
 
-  /** Class for use with 'Rbox.mk' */
+  /** Class may be made with 'Rbox.pair' to use with 'Rbox.mk' */
   public static class Pair<T> {
     int ammount;
     T element;
+    private Pair () {
+    }
   }
 
   /**
@@ -67,7 +69,7 @@ public class Rbox<T> implements Iterable<T>, Iterator<T> {
    *   }});
    * </pre>
    * @param <T> Generic
-   * @param els Elements of box. This elements are passed by reference.
+   * @param els Elements of box.
    * @return A new Rbox
    */
   public static <T> Rbox<T> mk (List<Pair<T>> els) {

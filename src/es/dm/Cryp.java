@@ -112,12 +112,12 @@ public class Cryp {
     int len = b64.length();
     String k2 = key(k, len);
 
-    char[] r = new char[len];
+    byte[] r = new byte[len];
     for (int i = 0; i < len; ++i) {
-      r[i] = (char)(b64.charAt(i) + k2.charAt(i));
+      r[i] = (byte)(b64.charAt(i) + k2.charAt(i));
     }
 
-    return B64.encode(new String(r));
+    return B64.encode(r);
   }
 
   /**
@@ -131,13 +131,13 @@ public class Cryp {
       throw new IllegalArgumentException("k is an empty String");
     }
 
-    String b64 = B64.decode(tx);
-    int len = b64.length();
+    byte[] b64 = B64.decodeBytes(tx);
+    int len = b64.length;
     String k2 = key(k, len);
 
     char[] r = new char[len];
     for (int i = 0; i < len; ++i) {
-      r[i] = (char)(b64.charAt(i) - k2.charAt(i));
+      r[i] = (char)(byte)(b64[i] - k2.charAt(i));
     }
 
     return B64.decode(new String(r));

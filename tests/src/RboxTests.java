@@ -1,5 +1,5 @@
 import es.dm.Std;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 import es.dm.Rbox;
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ public class RboxTests {
     System.out.println("Rbox Tests");
 
     Rbox<Integer> box = new Rbox<>(
-      Std.toStream(Std.range(4)).collect(Collectors.toList())
+      IntStream.range(0, 4).boxed().collect(Collectors.toList())
     );
 //    Std.toStream(box).limit(8).forEach(System.out::println);
 

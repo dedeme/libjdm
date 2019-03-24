@@ -46,7 +46,7 @@ run*)
   java -cp pack/$PRG.jar:tests/classes Main
   ;;
 doc*)
-  javadoc -quiet -d api -sourcepath src es.dm
+  javadoc -quiet -d api -sourcepath src -linksource es.dm
   ;;
 *)
   echo $1: Unknown option

@@ -11,6 +11,8 @@ public class FileTests {
 
     String home = Std.home();
     assert Std.fexists(home);
+    Std.del(home);
+    Std.mkdir(home);
 
     String path = fpath(home, "f1.txt");
     assert !Std.fexists(path);
