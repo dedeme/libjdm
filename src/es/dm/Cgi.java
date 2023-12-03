@@ -180,17 +180,17 @@ public class Cgi {
   /**
    * Tries an authentication.
    * @param user User id.
-   * @param key User password
+   * @param ukey User password.
    * @param expiration Session expiration time. If its value is 0, expiration
    *        time will be maximum.
    * @return If authentication is valid returns:<pre>
    *    {
-   *      "level": "xxxx",    // User level -&gt; "0" = Administrator
+   *      "level": "xxxx",    // User level "0" = Administrator
    *      "sessionId": "xxx", // Session identifier
    *      "key": "xxx"        // Communication key
    *    }
    * </pre>
-   * else returns: <pre>
+   *  else returns: <pre>
    *    {
    *      "level": "",
    *      "sessionId": "",

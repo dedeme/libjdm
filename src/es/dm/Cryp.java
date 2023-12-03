@@ -43,7 +43,7 @@ public class Cryp {
     int sum = 0;
     for (int i = 0; i < lenk; ++i) {
       byte b = k[i];
-      sum += (int)(b < 0 ? 256 + b : b);
+      sum += (b < 0 ? 256 + b : b);
     }
 
     int length2 = length + lenk;
@@ -55,16 +55,16 @@ public class Cryp {
     int v1, v2, v3, v4;
     for (int i = 0; i < length2; ++i) {
       byte b = k[ik];
-      v1 = (int)(b < 0 ? 256 + b : b);
+      v1 = (b < 0 ? 256 + b : b);
 
       b = k[v1 % lenk];
-      v2 = v1 + (int)(b < 0 ? 256 + b : b);
+      v2 = v1 + (b < 0 ? 256 + b : b);
 
       b = k[v2 % lenk];
-      v3 = v2 + (int)(b < 0 ? 256 + b : b);
+      v3 = v2 + (b < 0 ? 256 + b : b);
 
       b = k[v3 % lenk];
-      v4 = v3 + (int)(b < 0 ? 256 + b : b);
+      v4 = v3 + (b < 0 ? 256 + b : b);
 
       sum += i + v4;
       bs1[i] = (byte)sum;
@@ -77,21 +77,21 @@ public class Cryp {
 
     for (int i = 0; i < length2; ++i) {
       byte b = bs2[i];
-      v1 = (int)(b < 0 ? 256 + b : b);
+      v1 = (b < 0 ? 256 + b : b);
 
       b = bs2[v1 % length2];
-      v2 = v1 + (int)(b < 0 ? 256 + b : b);
+      v2 = v1 + (b < 0 ? 256 + b : b);
 
       b = bs2[v2 % length2];
-      v3 = v2 + (int)(b < 0 ? 256 + b : b);
+      v3 = v2 + (b < 0 ? 256 + b : b);
 
       b = bs2[v3 % length2];
-      v4 = v3 + (int)(b < 0 ? 256 + b : b);
+      v4 = v3 + (b < 0 ? 256 + b : b);
 
       sum += v4;
       bs2[i] = (byte)sum;
       b = bs1[i];
-      bs[i] = (byte)(sum + (int)(b < 0 ? 256 + b : b));
+      bs[i] = (byte)(sum + (b < 0 ? 256 + b : b));
     }
 
     return B64.encode(bs).substring(0, length);

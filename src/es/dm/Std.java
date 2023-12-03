@@ -10,8 +10,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.Files;
+import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -446,7 +449,7 @@ public class Std {
    * @return A number.
    */
   public static double nOfStr (String n) {
-    return new Double(n);
+    return Double.parseDouble(n);
   }
 
   /**
@@ -559,11 +562,10 @@ public class Std {
    * Sorts 'l' randomly.
    * @param l List to sort.
    */
-  @SuppressWarnings("unchecked")
-  public static void shuffle (List l) {
+  public static <T> void shuffle (List<T> l) {
     for (int ix = l.size(); ix > 1; --ix) {
       int rnd = rndi(ix);
-      Object tmp = l.get(rnd);
+      T tmp = l.get(rnd);
       l.set(rnd, l.get(ix - 1));
       l.set(ix - 1, tmp);
     }
@@ -590,6 +592,24 @@ public class Std {
         el -> el.toString()
       ).collect(Collectors.toList()))
     ;
+  }
+
+  public static String http (
+    String url
+  ) throws MalformedURLException, IOException {
+    BufferedReader conn = new BufferedReader(
+      new InputStreamReader(new URL(url).openStream())
+    );
+
+    StringBuilder tx = new StringBuilder();
+    String l = conn.readLine();
+    while (l != null) {
+      tx.append(l);
+      tx.append("\n");
+      l = conn.readLine();
+    }
+
+    return tx.toString();
   }
 
 }

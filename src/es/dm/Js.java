@@ -24,6 +24,9 @@ public class Js {
   }
 
   void exc(String msg) {
+    int ix = this.ix;
+    this.ix = 0;
+
     int rest = tx.length() - ix;
     throw new IllegalArgumentException(
       msg + "\n" +
@@ -213,11 +216,14 @@ public class Js {
    */
   public boolean isNull () {
     blanks();
+    boolean r = false;
     if (starts("null")) {
       ix += 4;
-      return rend();
+      r = rend();
     }
-    return false;
+
+    ix = 0;
+    return r;
   }
 
   /**
@@ -238,14 +244,11 @@ public class Js {
     if (!rend()) {
       excSpare("boolean");
     }
+    ix = 0;
     return r;
   }
 
-  /**
-   * Reads a double value.
-   * @return The double (number) value of 'js'
-   */
-  public double rDouble () {
+  String rNumber () {
     blanks();
     if (ix == len) {
       exc("Expected a double value");
@@ -298,7 +301,33 @@ public class Js {
       excSpare("double");
     }
 
-    return new Double(tx.substring(start, end));
+    ix = 0;
+
+    return tx.substring(start, end);
+  }
+
+  /**
+   * Reads an int value.
+   * @return The int (number) value of 'js'
+   */
+  public int rInteger () {
+    return Integer.parseInt(rNumber());
+  }
+
+  /**
+   * Reads a long value.
+   * @return The long (number) value of 'js'
+   */
+  public long rLong () {
+    return Long.parseLong(rNumber());
+  }
+
+  /**
+   * Reads a double value.
+   * @return The double (number) value of 'js'
+   */
+  public double rDouble () {
+    return Double.parseDouble(rNumber());
   }
 
   /**
@@ -389,6 +418,7 @@ public class Js {
       excSpare("string");
     }
 
+    ix = 0;
     return sb.toString();
   }
 
@@ -421,6 +451,7 @@ public class Js {
       if (!rend()) {
         excSpare("array");
       }
+      ix = 0;
       return a;
     }
 
@@ -463,6 +494,7 @@ public class Js {
       excSpare("array");
     }
 
+    ix = 0;
     return a;
   }
 
@@ -495,6 +527,7 @@ public class Js {
       if (!rend()) {
         excSpare("object");
       }
+      ix = 0;
       return h;
     }
 
@@ -566,6 +599,7 @@ public class Js {
       excSpare("object");
     }
 
+    ix = 0;
     return h;
   }
 
